@@ -20,12 +20,18 @@ const VerticalLines: React.FC<VerticalLinesProps> = ({ values }) => {
 };
 
 function App() {
-  const [lineArr, setLineArr] = useState<number[]>([10, 20, 2, 7, 3, 1, 5, 6]);
+  const [inputArray, setInputArray] = useState<number[]>([]);
   const [isSorting, setIsSorting] = useState(false);
+
+  const handleInput = (e) => {
+    const arrOfNums = e.target.value.split(",").map(Number);
+    setInputArray(arrOfNums);
+  };
+  console.log(inputArray);
 
   const bubleSort = async () => {
     setIsSorting(true);
-    const sortedArr = [...lineArr];
+    const sortedArr = [...inputArray];
     for (let i = 0; i < sortedArr.length; i++) {
       for (let j = 0; j < sortedArr.length - i - 1; j++) {
         if (sortedArr[j] > sortedArr[j + 1]) {
@@ -33,7 +39,7 @@ function App() {
           sortedArr[j] = sortedArr[j + 1];
           sortedArr[j + 1] = tmp;
 
-          setLineArr([...sortedArr]);
+          setInputArray([...sortedArr]);
           await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }
@@ -43,10 +49,14 @@ function App() {
   return (
     <>
       <div className="App">
+        <div>
+          <input type="text" onChange={handleInput} />
+          <button>Go</button>
+        </div>
         <button onClick={bubleSort}>
           {isSorting ? "Sorting..." : "bubble sort"}
         </button>
-        <VerticalLines values={lineArr} />
+        <VerticalLines values={inputArray} />
       </div>
     </>
   );
