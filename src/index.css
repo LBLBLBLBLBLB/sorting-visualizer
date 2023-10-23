@@ -1,0 +1,9 @@
+.vertical-lines {
+  display: flex;
+}
+
+.vertical-line {
+  border-left: 1px solid #000;
+  margin-right: 1rem;
+  background-color: rebeccapurple;
+}
