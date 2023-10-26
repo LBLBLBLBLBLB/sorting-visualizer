@@ -24,6 +24,7 @@ function App() {
   const [displayInputArr, setDisplayInputArr] = useState<number[]>([]);
   const [isSorting, setIsSorting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [sortingSpeed, setSortingSpeed] = useState(1000);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputText = event.target.value;
@@ -53,21 +54,30 @@ function App() {
 
   const bubleSort = async () => {
     setIsSorting(true);
-    const sortedArr = [...inputArray];
+    const sortedArr = [...displayInputArr];
     for (let i = 0; i < sortedArr.length; i++) {
       for (let j = 0; j < sortedArr.length - i - 1; j++) {
         if (sortedArr[j] > sortedArr[j + 1]) {
           const tmp = sortedArr[j];
           sortedArr[j] = sortedArr[j + 1];
           sortedArr[j + 1] = tmp;
+          console.log(sortedArr);
 
-          setInputArray([...sortedArr]);
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await new Promise((resolve) => setTimeout(resolve, sortingSpeed));
+
+          setDisplayInputArr([...sortedArr]);
         }
       }
     }
     setIsSorting(false);
   };
+
+  const handleSortingSpeedChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSortingSpeed(parseInt(event.target.value, 10));
+  };
+
   return (
     <>
       <div className="App">
@@ -75,6 +85,16 @@ function App() {
           <input type="text" onChange={handleInput} />
           <button onClick={displayInput}>Go</button>
           <p>{errorMessage}</p>
+        </div>
+        <div>
+          <input
+            type="range"
+            min="1000"
+            max="2000"
+            step="200"
+            value={sortingSpeed}
+            onChange={handleSortingSpeedChange}
+          />
         </div>
         <button onClick={bubleSort}>
           {isSorting ? "Sorting..." : "bubble sort"}
