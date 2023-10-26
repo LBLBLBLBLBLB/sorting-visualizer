@@ -21,13 +21,35 @@ const VerticalLines: React.FC<VerticalLinesProps> = ({ values }) => {
 
 function App() {
   const [inputArray, setInputArray] = useState<number[]>([]);
+  const [displayInputArr, setDisplayInputArr] = useState<number[]>([]);
   const [isSorting, setIsSorting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const handleInput = (e) => {
-    const arrOfNums = e.target.value.split(",").map(Number);
-    setInputArray(arrOfNums);
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputText = event.target.value;
+    if (inputText === "") {
+      setInputArray([]);
+      setDisplayInputArr([]);
+    } else {
+      const arrOfNums = inputText.split(",").map(Number);
+      setInputArray(arrOfNums);
+    }
   };
-  console.log(inputArray);
+
+  const displayInput = () => {
+    if (inputArray.some((num) => num > 50 || num === 0)) {
+      setErrorMessage(
+        "Sorry, you're restricted to values between 0 and 50 inclusive(or there are duplicate commas)"
+      );
+    } else if (inputArray.some((item) => isNaN(item))) {
+      setErrorMessage("There seems to be an invalid element (not a number)");
+    } else if (inputArray.length > 20) {
+      setErrorMessage("Array should be less than 20");
+    } else {
+      setErrorMessage("");
+      setDisplayInputArr(inputArray);
+    }
+  };
 
   const bubleSort = async () => {
     setIsSorting(true);
@@ -51,12 +73,14 @@ function App() {
       <div className="App">
         <div>
           <input type="text" onChange={handleInput} />
-          <button>Go</button>
+          <button onClick={displayInput}>Go</button>
+          <p>{errorMessage}</p>
         </div>
         <button onClick={bubleSort}>
           {isSorting ? "Sorting..." : "bubble sort"}
         </button>
-        <VerticalLines values={inputArray} />
+
+        <VerticalLines values={displayInputArr} />
       </div>
     </>
   );
