@@ -9,14 +9,14 @@ const VerticalLines: React.FC<VerticalLinesProps> = ({
   swappingIndices,
 }) => {
   return (
-    <div className="vertical-lines">
+    <div className="flex text-center">
       {values.map((value: number, i: number) => (
         <div
           key={i}
-          className={`vertical-line ${
-            swappingIndices.includes(i) ? "moving" : ""
-          }`}
-          style={{ width: "1rem", height: `${value}rem` }}
+          className={`rounded-sm  ${
+            swappingIndices.includes(i) ? "bg-rose-600" : "bg-teal-500"
+          } mr-4`}
+          style={{ width: "2rem", height: `${value * 2}rem` }}
         >
           {value}
         </div>
@@ -27,7 +27,9 @@ const VerticalLines: React.FC<VerticalLinesProps> = ({
 
 function App() {
   const [inputArray, setInputArray] = useState<number[]>([]);
-  const [displayInputArr, setDisplayInputArr] = useState<number[]>([]);
+  const [displayInputArr, setDisplayInputArr] = useState<number[]>([
+    10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+  ]);
   const [isSorting, setIsSorting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [sortingSpeed, setSortingSpeed] = useState(1);
@@ -94,33 +96,63 @@ function App() {
 
   return (
     <>
-      <div className="App">
-        <div>
-          <input type="text" onChange={handleInput} />
-          <button onClick={displayInput}>Go</button>
-          <p>{errorMessage}</p>
+      <div className="">
+        <h1 className="text-center text-teal-500 text-4xl font-bold mt-8">
+          Sorting Visualizer
+        </h1>
+        <div className="mt-10 gap-10 flex justify-center align-middle">
+          <div>
+            <input
+              type="text"
+              onChange={handleInput}
+              className="appearance-none block  bg-gray-100 text-gray-700 border border-gray-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            />
+          </div>
+          <div className="flex flex-col items-center">
+            <p className="font-semibold text-gray-900">speed</p>
+            <div className="flex gap-2 ">
+              <span className="font-semibold text-gray-600">1x</span>
+              <input
+                type="range"
+                min="1"
+                max="5"
+                step="1"
+                value={sortingSpeed}
+                onChange={handleSortingSpeedChange}
+                className=""
+              />
+              <span className="font-semibold text-gray-950">
+                {sortingSpeed}x
+              </span>
+            </div>
+          </div>
+          <button
+            onClick={displayInput}
+            className="bg-teal-500 px-3 py-1 rounded-sm font-semibold text-gray-900"
+          >
+            Go
+          </button>
         </div>
-        <div>
-          <p>speed</p>
-          <span>1x</span>
-          <input
-            type="range"
-            min="1"
-            max="5"
-            step="1"
-            value={sortingSpeed}
-            onChange={handleSortingSpeedChange}
-          />
-          <span>{sortingSpeed}x</span>
+        <div className="flex justify-center h-8 mt-3">
+          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+            {errorMessage}
+          </p>
         </div>
-        <button onClick={bubleSort}>
-          {isSorting ? "Sorting..." : "bubble sort"}
-        </button>
+        <div className="flex justify-center">
+          <button
+            onClick={bubleSort}
+            className=" bg-teal-500 mt-5 w-32 h-10 rounded-sm font-semibold text-gray-900"
+          >
+            {isSorting ? "Sorting..." : "bubble sort"}
+          </button>
+        </div>
       </div>
-      <VerticalLines
-        values={displayInputArr}
-        swappingIndices={swappingIndices}
-      />
+      <div className="flex justify-center mt-10">
+        <VerticalLines
+          values={displayInputArr}
+          swappingIndices={swappingIndices}
+        />
+      </div>
     </>
   );
 }
