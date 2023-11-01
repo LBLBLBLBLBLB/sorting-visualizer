@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Modal from "./components/Modal";
 
 interface VerticalLinesProps {
   values: number[];
@@ -153,6 +154,7 @@ function App() {
           swappingIndices={swappingIndices}
         />
       </div>
+      <Modal />
     </>
   );
 }
