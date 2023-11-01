@@ -1,7 +1,5 @@
-interface VerticalLinesProps {
-  values: number[];
-  swappingIndices: number[];
-}
+import { VerticalLinesProps } from "../types/interfaces";
+
 const VerticalLines: React.FC<VerticalLinesProps> = ({
   values,
   swappingIndices,
