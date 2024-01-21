@@ -16,18 +16,24 @@ const App = () => {
       setInputArray(arrOfNums);
     }
   };
-
+  console.log(inputArray);
   const displayInput = () => {
-    if (inputArray.some((num) => num > 50 || num <= 0)) {
+    const filtered_numbers = inputArray.filter((num) => num !== 0);
+
+    if (inputArray.some((num) => num > 50 || num < 0)) {
       setErrorMsg(
         "Sorry, you're restricted to values between 0 and 50 inclusive"
       );
-    } else if (inputArray.length > 20) {
+    } else if (filtered_numbers.length > 20) {
       setErrorMsg("Array should be less than 20");
     } else if (inputArray.some((item) => isNaN(item))) {
       setErrorMsg("There seems to be an invalid element (not a number)");
+    } else if (inputArray.some((num) => num === 0)) {
+      setErrorMsg(
+        "There seems to be a missing element (a duplicate comma somewhere perhaps?)"
+      );
     } else {
-      setErrorMsg("");
+      setErrorMsg(" ");
       setDisplayInputNums(inputArray);
     }
   };
