@@ -14,7 +14,7 @@ export default function Modal() {
                     Welcome to the Sorting Visualizer!
                   </h3>
                   <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-gray-300 hover:bg-gray-400 text-red-600 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
@@ -27,8 +27,8 @@ export default function Modal() {
                     <li>
                       <strong>Input Numbers:</strong>
                       <p>
-                        Enter a list of numbers separated by commas (e.g., 10,
-                        9, 8, 7, 6, 5, 4, 3, 2, 1).
+                        Enter a list of numbers separated by commas (e.g. 10, 9,
+                        8, 7, 6, 5, 4, 3, 2, 1).
                       </p>
                       <p>You can enter up to 20 numbers.</p>
                       <p>Each number must be between 1 and 50.</p>

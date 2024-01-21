@@ -14,7 +14,8 @@ const Input: React.FC<InputProps> = ({
           <input
             type="text"
             onChange={handleInput}
-            className="appearance-none block  bg-gray-100 text-gray-700 border border-gray-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="appearance-none block  bg-gray-100 text-gray-700 border border-gray-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 "
+            placeholder="10,9,8,7,6..."
           />
         </div>
         <div className="flex flex-col items-center">
