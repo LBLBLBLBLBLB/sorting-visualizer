@@ -45,16 +45,23 @@ const App = () => {
         type="text"
         className="bg-gray-300 text-black-700 border border-gray-300 rounded py-3 px-4  focus:outline-none focus:bg-white focus:border-gray-500 "
       />
+      {errorMsg}
       <button
         onClick={displayInput}
         className="bg-teal-500 px-3 py-1 rounded-sm font-semibold text-gray-900"
       >
         Generate
       </button>
-      {displayInputNums.map((num) => (
-        <p>{num}</p>
-      ))}
-      {errorMsg}
+      <div className="flex gap-5">
+        {displayInputNums.map((num) => (
+          <div
+            style={{ height: `${num * 50}px` }}
+            className={`bg-teal-500 rounded-sm px-2`}
+          >
+            {num}
+          </div>
+        ))}
+      </div>
     </>
   );
 };
