@@ -18,9 +18,20 @@ const App = () => {
   };
 
   const displayInput = () => {
-    setDisplayInputNums(inputArray);
+    if (inputArray.some((num) => num > 50 || num <= 0)) {
+      setErrorMsg(
+        "Sorry, you're restricted to values between 0 and 50 inclusive"
+      );
+    } else if (inputArray.length > 20) {
+      setErrorMsg("Array should be less than 20");
+    } else if (inputArray.some((item) => isNaN(item))) {
+      setErrorMsg("There seems to be an invalid element (not a number)");
+    } else {
+      setErrorMsg("");
+      setDisplayInputNums(inputArray);
+    }
   };
-  console.log(displayInputNums);
+
   return (
     <>
       <input
@@ -37,6 +48,7 @@ const App = () => {
       {displayInputNums.map((num) => (
         <p>{num}</p>
       ))}
+      {errorMsg}
     </>
   );
 };
