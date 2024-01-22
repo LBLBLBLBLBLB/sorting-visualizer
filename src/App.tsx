@@ -5,7 +5,7 @@ const App = () => {
   const [displayInputNums, setDisplayInputNums] = useState<number[]>([]);
   const [errorMsg, setErrorMsg] = useState<string>(" ");
 
-  // Get Input and modify it as numbers array for display
+  // Get input from the event, and modify it into an array of numbers for display
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputTxt = event.target.value;
 
@@ -18,9 +18,9 @@ const App = () => {
     }
   };
 
-  // get modified array and checks if something is wrong in it
-  // when it has array of numbers it got displayed
+  // Check the modified array for potential issues and display it
   const displayInput = () => {
+    // filter out zeros from arrray
     const filtered_numbers = inputArray.filter((num) => num !== 0);
 
     if (inputArray.some((num) => num > 50 || num < 0)) {
@@ -31,10 +31,7 @@ const App = () => {
       setErrorMsg("Array should be less than 20");
     } else if (inputArray.some((item) => isNaN(item))) {
       setErrorMsg("There seems to be an invalid element (not a number)");
-    } else if (
-      inputArray.some((num) => num === 0) ||
-      filtered_numbers.length === 0
-    ) {
+    } else if (inputArray.some((num) => num === 0)) {
       setErrorMsg(
         "There seems to be a missing element or 0 (a duplicate comma somewhere perhaps?)"
       );
@@ -42,6 +39,40 @@ const App = () => {
       setErrorMsg(" ");
       setDisplayInputNums(inputArray);
     }
+  };
+
+  const bubbleSort = () => {
+    const arr = [...displayInputNums];
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < arr.length - i - 1; j++) {
+        if (arr[j] > arr[j + 1]) {
+          const temp = arr[j];
+          arr[j] = arr[j + 1];
+          arr[j + 1] = temp;
+
+          setDisplayInputNums([...arr]);
+        }
+      }
+    }
+  };
+
+  const selectionSort = () => {
+    const arr = [...displayInputNums];
+    for (let i = 0; i < arr.length - 1; i++) {
+      let minIndex = i;
+      for (let j = i + 1; j < arr.length; j++) {
+        if (arr[j] < arr[minIndex]) {
+          minIndex = j;
+        }
+      }
+      if (minIndex !== i) {
+        const temp = arr[i];
+        arr[i] = arr[minIndex];
+        arr[minIndex] = temp;
+      }
+    }
+
+    setDisplayInputNums([...arr]);
   };
 
   return (
@@ -72,14 +103,15 @@ const App = () => {
       </div>
       <div className="flex justify-center gap-5 mb-8">
         <button
-          onClick={() => {
-            console.log("BUBLES");
-          }}
+          onClick={bubbleSort}
           className=" bg-rose-500 w-32 h-10 rounded-sm font-semibold text-gray-900"
         >
           Bubble Sort
         </button>
-        <button className=" bg-sky-500 w-32 h-10 rounded-sm font-semibold text-gray-900">
+        <button
+          onClick={selectionSort}
+          className=" bg-sky-500 w-32 h-10 rounded-sm font-semibold text-gray-900"
+        >
           Selection Sort
         </button>
         <button className=" bg-orange-500 w-32 h-10 rounded-sm font-semibold text-gray-900">
