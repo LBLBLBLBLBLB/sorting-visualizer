@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 
-const generateRandomArr = () => {
-  return Array.from({ length: 20 }, () => Math.floor(Math.random() * 20) + 1);
-};
+import { generateRandomArr } from "./utils/randomArrayGenerator";
+
+import Header from "./components/Header";
+import InputSection from "./components/InputSection";
+import ErrorMessage from "./components/ErrorMessage";
+import SortingButtons from "./components/SortingButtons";
+import DisplayNumbers from "./components/DisplayNumbers";
 
 const App = () => {
   const [inputArray, setInputArray] = useState<number[]>([]);
@@ -52,6 +56,7 @@ const App = () => {
       }
     }
   };
+
   useEffect(() => {
     displayInput(true);
   }, []);
@@ -80,69 +85,16 @@ const App = () => {
 
   return (
     <>
-      <header>
-        <h1 className="text-teal-500 font-bold text-[2.4rem] text-center p-6 tracking-[6px]">
-          Sorting Visualizer
-        </h1>
-      </header>
+      <Header />
       <div className="flex items-center flex-col">
-        <div className="flex gap-10 mb-1">
-          <button
-            onClick={() => displayInput(true)}
-            className="bg-teal-500 px-3 py-1 rounded-sm font-semibold text-gray-900 mr-10"
-          >
-            Random numbers
-          </button>
-          <input
-            onChange={handleInput}
-            type="text"
-            placeholder="5,4,3,2,1.."
-            className="bg-gray-300 text-black-700 border border-gray-300 rounded py-3 px-4  focus:outline-none focus:bg-white focus:border-gray-500 "
-          />
-          <button
-            onClick={() => displayInput()}
-            className="bg-teal-500 px-3 py-1 rounded-sm font-semibold text-gray-900"
-          >
-            Go
-          </button>
-        </div>
-
-        <div className="flex justify-center h-8 mb-2 ">
-          <p className=" text-sm text-red-600 ">{errorMsg}</p>
-        </div>
+        <InputSection displayInput={displayInput} handleInput={handleInput} />
+        <ErrorMessage errorMsg={errorMsg} />
       </div>
-      <div className="flex justify-center gap-5 mb-8">
-        <button
-          onClick={bubbleSort}
-          className=" bg-rose-500 w-32 h-10 rounded-sm font-semibold text-gray-900"
-        >
-          {sorting ? "Sorting" : " Bubble Sort"}
-        </button>
-        <button className=" bg-sky-500 w-32 h-10 rounded-sm font-semibold text-gray-900">
-          Selection Sort...
-        </button>
-        <button className=" bg-orange-500 w-32 h-10 rounded-sm font-semibold text-gray-900">
-          Insertion Sort...
-        </button>
-        <button className=" bg-violet-500 w-32 h-10 rounded-sm font-semibold text-gray-900">
-          Insertion Sort...
-        </button>
-      </div>
-      <div className="flex gap-5 justify-center">
-        {displayInputNums.map((num, index) => (
-          <div
-            key={index}
-            style={{
-              height: `${num * 26}px`,
-            }}
-            className={`rounded-sm  ${
-              swapIndices.includes(index) ? "bg-rose-600" : "bg-teal-500"
-            } w-8`}
-          >
-            <p className="text-center ">{num}</p>
-          </div>
-        ))}
-      </div>
+      <SortingButtons sorting={sorting} bubbleSort={bubbleSort} />
+      <DisplayNumbers
+        displayInputNums={displayInputNums}
+        swapIndices={swapIndices}
+      />
     </>
   );
 };
