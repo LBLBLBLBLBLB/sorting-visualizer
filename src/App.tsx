@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+const generateRandomArr = () => {
+  return Array.from({ length: 20 }, () => Math.floor(Math.random() * 20) + 1);
+};
 
 const App = () => {
   const [inputArray, setInputArray] = useState<number[]>([]);
-  const [displayInputNums, setDisplayInputNums] = useState<number[]>([]);
+  const [displayInputNums, setDisplayInputNums] = useState<number[]>(
+    generateRandomArr()
+  );
   const [errorMsg, setErrorMsg] = useState<string>(" ");
   const [swapIndices, setSwapIndices] = useState<number[]>([]);
   const [sorting, setSorting] = useState<boolean>(false);
@@ -21,28 +27,34 @@ const App = () => {
   };
 
   // Check the modified array for potential issues and display it
-  const displayInput = () => {
+  const displayInput = (random = false) => {
     // filter out zeros from arrray
     const filtered_numbers = inputArray.filter((num) => num !== 0);
-
-    if (inputArray.some((num) => num > 20 || num < 0)) {
-      setErrorMsg(
-        "Sorry, you're restricted to values between 0 and 20 inclusive"
-      );
-    } else if (filtered_numbers.length > 20) {
-      setErrorMsg("Array should be less than 20");
-    } else if (inputArray.some((item) => isNaN(item))) {
-      setErrorMsg("There seems to be an invalid element (not a number)");
-    } else if (inputArray.some((num) => num === 0)) {
-      setErrorMsg(
-        "There seems to be a missing element or 0 (a duplicate comma somewhere perhaps?)"
-      );
-    } else {
-      setSorting(false);
+    if (random) {
       setErrorMsg(" ");
-      setDisplayInputNums(inputArray);
+      setDisplayInputNums(generateRandomArr());
+    } else {
+      if (inputArray.some((num) => num > 20 || num < 0)) {
+        setErrorMsg(
+          "Sorry, you're restricted to values between 0 and 20 inclusive"
+        );
+      } else if (filtered_numbers.length > 20) {
+        setErrorMsg("Array should be less than 20");
+      } else if (inputArray.some((item) => isNaN(item))) {
+        setErrorMsg("There seems to be an invalid element (not a number)");
+      } else if (inputArray.some((num) => num === 0)) {
+        setErrorMsg(
+          "There seems to be a missing element or 0 (a duplicate comma somewhere perhaps?)"
+        );
+      } else {
+        setErrorMsg(" ");
+        setDisplayInputNums(inputArray);
+      }
     }
   };
+  useEffect(() => {
+    displayInput(true);
+  }, []);
 
   const bubbleSort = async () => {
     const arr = [...displayInputNums];
@@ -66,39 +78,6 @@ const App = () => {
     setSorting(false);
   };
 
-  // const selectionSort = async () => {
-  //   const arr = [...displayInputNums];
-  //   for (let i = 0; i < arr.length - 1; i++) {
-  //     let minIndex = i;
-
-  //     setSwapIndices([i, minIndex]);
-
-  //     for (let j = i + 1; j < arr.length; j++) {
-  //       setSwapIndices([i, j]);
-
-  //       if (arr[j] < arr[minIndex]) {
-  //         minIndex = j;
-  //       }
-
-  //       await new Promise((resolve) => setTimeout(resolve, 1000));
-  //       setDisplayInputNums([...arr]);
-  //       setSwapIndices([]);
-  //     }
-
-  //     if (minIndex !== i) {
-  //       const temp = arr[i];
-  //       arr[i] = arr[minIndex];
-  //       arr[minIndex] = temp;
-  //     }
-
-  //     setDisplayInputNums([...arr]);
-  //   }
-  // };
-
-  const stopSorting = () => {
-    setSorting(false);
-  };
-
   return (
     <>
       <header>
@@ -108,16 +87,20 @@ const App = () => {
       </header>
       <div className="flex items-center flex-col">
         <div className="flex gap-10 mb-1">
+          <button
+            onClick={() => displayInput(true)}
+            className="bg-teal-500 px-3 py-1 rounded-sm font-semibold text-gray-900 mr-10"
+          >
+            Random numbers
+          </button>
           <input
             onChange={handleInput}
             type="text"
             placeholder="5,4,3,2,1.."
-            disabled={sorting}
             className="bg-gray-300 text-black-700 border border-gray-300 rounded py-3 px-4  focus:outline-none focus:bg-white focus:border-gray-500 "
           />
           <button
-            onClick={displayInput}
-            disabled={sorting}
+            onClick={() => displayInput()}
             className="bg-teal-500 px-3 py-1 rounded-sm font-semibold text-gray-900"
           >
             Go
@@ -130,22 +113,19 @@ const App = () => {
       </div>
       <div className="flex justify-center gap-5 mb-8">
         <button
-          onClick={sorting ? stopSorting : bubbleSort}
+          onClick={bubbleSort}
           className=" bg-rose-500 w-32 h-10 rounded-sm font-semibold text-gray-900"
         >
           {sorting ? "Sorting" : " Bubble Sort"}
         </button>
-        <button
-          // onClick={selectionSort}
-          className=" bg-sky-500 w-32 h-10 rounded-sm font-semibold text-gray-900"
-        >
-          Selection Sort
+        <button className=" bg-sky-500 w-32 h-10 rounded-sm font-semibold text-gray-900">
+          Selection Sort...
         </button>
         <button className=" bg-orange-500 w-32 h-10 rounded-sm font-semibold text-gray-900">
-          Insertion Sort
+          Insertion Sort...
         </button>
         <button className=" bg-violet-500 w-32 h-10 rounded-sm font-semibold text-gray-900">
-          Insertion Sort
+          Insertion Sort...
         </button>
       </div>
       <div className="flex gap-5 justify-center">
