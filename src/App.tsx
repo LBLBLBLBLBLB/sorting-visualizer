@@ -4,6 +4,7 @@ const App = () => {
   const [inputArray, setInputArray] = useState<number[]>([]);
   const [displayInputNums, setDisplayInputNums] = useState<number[]>([]);
   const [errorMsg, setErrorMsg] = useState<string>(" ");
+  const [swapIndices, setSwapIndices] = useState<number[]>([]);
 
   // Get input from the event, and modify it into an array of numbers for display
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,9 +24,9 @@ const App = () => {
     // filter out zeros from arrray
     const filtered_numbers = inputArray.filter((num) => num !== 0);
 
-    if (inputArray.some((num) => num > 50 || num < 0)) {
+    if (inputArray.some((num) => num > 20 || num < 0)) {
       setErrorMsg(
-        "Sorry, you're restricted to values between 0 and 50 inclusive"
+        "Sorry, you're restricted to values between 0 and 20 inclusive"
       );
     } else if (filtered_numbers.length > 20) {
       setErrorMsg("Array should be less than 20");
@@ -41,39 +42,44 @@ const App = () => {
     }
   };
 
-  const bubbleSort = () => {
+  const bubbleSort = async () => {
     const arr = [...displayInputNums];
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < arr.length - i - 1; j++) {
         if (arr[j] > arr[j + 1]) {
+          setSwapIndices([j, j + 1]);
+
           const temp = arr[j];
           arr[j] = arr[j + 1];
           arr[j + 1] = temp;
 
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
           setDisplayInputNums([...arr]);
         }
+        setSwapIndices([]);
       }
     }
   };
 
-  const selectionSort = () => {
-    const arr = [...displayInputNums];
-    for (let i = 0; i < arr.length - 1; i++) {
-      let minIndex = i;
-      for (let j = i + 1; j < arr.length; j++) {
-        if (arr[j] < arr[minIndex]) {
-          minIndex = j;
-        }
-      }
-      if (minIndex !== i) {
-        const temp = arr[i];
-        arr[i] = arr[minIndex];
-        arr[minIndex] = temp;
-      }
-    }
-
-    setDisplayInputNums([...arr]);
-  };
+  // const selectionSort = async () => {
+  //   const arr = [...displayInputNums];
+  //   for (let i = 0; i < arr.length - 1; i++) {
+  //     let minIndex = i;
+  //     for (let j = i + 1; j < arr.length; j++) {
+  //       if (arr[j] < arr[minIndex]) {
+  //         minIndex = j;
+  //       }
+  //     }
+  //     if (minIndex !== i) {
+  //       const temp = arr[i];
+  //       arr[i] = arr[minIndex];
+  //       arr[minIndex] = temp;
+  //     }
+  //     setDisplayInputNums([...arr]);
+  //     await new Promise((resolve) => setTimeout(resolve, 1000));
+  //   }
+  // };
 
   return (
     <>
@@ -87,6 +93,7 @@ const App = () => {
           <input
             onChange={handleInput}
             type="text"
+            placeholder="5,4,3,2,1.."
             className="bg-gray-300 text-black-700 border border-gray-300 rounded py-3 px-4  focus:outline-none focus:bg-white focus:border-gray-500 "
           />
           <button
@@ -109,7 +116,7 @@ const App = () => {
           Bubble Sort
         </button>
         <button
-          onClick={selectionSort}
+          // onClick={selectionSort}
           className=" bg-sky-500 w-32 h-10 rounded-sm font-semibold text-gray-900"
         >
           Selection Sort
@@ -122,10 +129,15 @@ const App = () => {
         </button>
       </div>
       <div className="flex gap-5 justify-center">
-        {displayInputNums.map((num) => (
+        {displayInputNums.map((num, index) => (
           <div
-            style={{ height: `${num * 26}px` }}
-            className="bg-teal-500 rounded-sm w-8 "
+            key={index}
+            style={{
+              height: `${num * 26}px`,
+            }}
+            className={`rounded-sm  ${
+              swapIndices.includes(index) ? "bg-rose-600" : "bg-teal-500"
+            } w-8`}
           >
             <p className="text-center ">{num}</p>
           </div>
