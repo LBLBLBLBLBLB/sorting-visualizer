@@ -5,6 +5,7 @@ const App = () => {
   const [displayInputNums, setDisplayInputNums] = useState<number[]>([]);
   const [errorMsg, setErrorMsg] = useState<string>(" ");
   const [swapIndices, setSwapIndices] = useState<number[]>([]);
+  const [sorting, setSorting] = useState<boolean>(false);
 
   // Get input from the event, and modify it into an array of numbers for display
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +38,7 @@ const App = () => {
         "There seems to be a missing element or 0 (a duplicate comma somewhere perhaps?)"
       );
     } else {
+      setSorting(false);
       setErrorMsg(" ");
       setDisplayInputNums(inputArray);
     }
@@ -47,6 +49,7 @@ const App = () => {
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < arr.length - i - 1; j++) {
         if (arr[j] > arr[j + 1]) {
+          setSorting(true);
           setSwapIndices([j, j + 1]);
 
           const temp = arr[j];
@@ -60,26 +63,41 @@ const App = () => {
         setSwapIndices([]);
       }
     }
+    setSorting(false);
   };
 
   // const selectionSort = async () => {
   //   const arr = [...displayInputNums];
   //   for (let i = 0; i < arr.length - 1; i++) {
   //     let minIndex = i;
+
+  //     setSwapIndices([i, minIndex]);
+
   //     for (let j = i + 1; j < arr.length; j++) {
+  //       setSwapIndices([i, j]);
+
   //       if (arr[j] < arr[minIndex]) {
   //         minIndex = j;
   //       }
+
+  //       await new Promise((resolve) => setTimeout(resolve, 1000));
+  //       setDisplayInputNums([...arr]);
+  //       setSwapIndices([]);
   //     }
+
   //     if (minIndex !== i) {
   //       const temp = arr[i];
   //       arr[i] = arr[minIndex];
   //       arr[minIndex] = temp;
   //     }
+
   //     setDisplayInputNums([...arr]);
-  //     await new Promise((resolve) => setTimeout(resolve, 1000));
   //   }
   // };
+
+  const stopSorting = () => {
+    setSorting(false);
+  };
 
   return (
     <>
@@ -94,10 +112,12 @@ const App = () => {
             onChange={handleInput}
             type="text"
             placeholder="5,4,3,2,1.."
+            disabled={sorting}
             className="bg-gray-300 text-black-700 border border-gray-300 rounded py-3 px-4  focus:outline-none focus:bg-white focus:border-gray-500 "
           />
           <button
             onClick={displayInput}
+            disabled={sorting}
             className="bg-teal-500 px-3 py-1 rounded-sm font-semibold text-gray-900"
           >
             Go
@@ -110,10 +130,10 @@ const App = () => {
       </div>
       <div className="flex justify-center gap-5 mb-8">
         <button
-          onClick={bubbleSort}
+          onClick={sorting ? stopSorting : bubbleSort}
           className=" bg-rose-500 w-32 h-10 rounded-sm font-semibold text-gray-900"
         >
-          Bubble Sort
+          {sorting ? "Sorting" : " Bubble Sort"}
         </button>
         <button
           // onClick={selectionSort}
