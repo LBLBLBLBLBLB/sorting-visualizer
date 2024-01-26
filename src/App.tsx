@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { generateRandomArr } from "./utils/randomArrayGenerator";
 
@@ -22,6 +22,10 @@ const App = () => {
   const [sortingSpeed, setSortingSpeed] = useState<number>(1);
 
   const delay = 1000 / sortingSpeed;
+
+  useEffect(() => {
+    document.title = sorting ? "Sorting . . ." : "Sorting Visualizer";
+  }, [sorting]);
 
   // Get input from the event, and modify it into an array of numbers for display
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
