@@ -9,6 +9,7 @@ import SortingButtons from "./components/SortingButtons";
 import DisplayNumbers from "./components/DisplayNumbers";
 import SortingSpeed from "./components/SortingSpeed";
 import DivideLine from "./components/DivideLine";
+import Modal from "./components/Modal";
 
 const App = () => {
   const [inputArray, setInputArray] = useState<number[]>([]);
@@ -105,6 +106,7 @@ const App = () => {
         displayInputNums={displayInputNums}
         swapIndices={swapIndices}
       />
+      <Modal />
     </>
   );
 };
