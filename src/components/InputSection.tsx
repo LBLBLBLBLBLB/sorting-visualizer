@@ -8,13 +8,14 @@ const InputSection: React.FC<InputSectionProps> = ({
   handleInput,
 }) => {
   return (
-    <div className="flex gap-10 mb-1">
+    <div className="flex gap-5 mb-1 items-center">
       <button
         onClick={() => displayInput(true)}
-        className="bg-teal-500 px-3 py-1 rounded-sm font-semibold text-gray-900 mr-10"
+        className="bg-teal-500 px-4 py-3 rounded-sm font-semibold text-gray-900 "
       >
         Random numbers
       </button>
+      <p className="font-bold">or</p>
       <input
         onChange={handleInput}
         type="text"
@@ -23,7 +24,7 @@ const InputSection: React.FC<InputSectionProps> = ({
       />
       <button
         onClick={() => displayInput()}
-        className="bg-teal-500 px-3 py-1 rounded-sm font-semibold text-gray-900"
+        className="bg-teal-500 px-3 py-3 rounded-sm font-semibold text-gray-900"
       >
         Go
       </button>

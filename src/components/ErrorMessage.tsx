@@ -4,7 +4,7 @@ interface ErrorMessageProps {
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ errorMsg }) => {
   return (
-    <div className="flex justify-center h-8 mb-2 ">
+    <div className="fixed h-8 ">
       <p className=" text-sm text-red-600 ">{errorMsg}</p>
     </div>
   );

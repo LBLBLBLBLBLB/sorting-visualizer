@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { generateRandomArr } from "./utils/randomArrayGenerator";
 
@@ -7,6 +7,8 @@ import InputSection from "./components/InputSection";
 import ErrorMessage from "./components/ErrorMessage";
 import SortingButtons from "./components/SortingButtons";
 import DisplayNumbers from "./components/DisplayNumbers";
+import SortingSpeed from "./components/SortingSpeed";
+import DivideLine from "./components/DivideLine";
 
 const App = () => {
   const [inputArray, setInputArray] = useState<number[]>([]);
@@ -23,7 +25,6 @@ const App = () => {
 
     if (inputTxt === "") {
       setInputArray([]);
-      setDisplayInputNums([]);
     } else {
       const arrOfNums = inputTxt.split(",").map(Number);
       setInputArray(arrOfNums);
@@ -57,10 +58,6 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    displayInput(true);
-  }, []);
-
   const bubbleSort = async () => {
     const arr = [...displayInputNums];
     for (let i = 0; i < arr.length; i++) {
@@ -73,7 +70,7 @@ const App = () => {
           arr[j] = arr[j + 1];
           arr[j + 1] = temp;
 
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await new Promise((resolve) => setTimeout(resolve, 2000));
 
           setDisplayInputNums([...arr]);
         }
@@ -86,11 +83,16 @@ const App = () => {
   return (
     <>
       <Header />
-      <div className="flex items-center flex-col">
-        <InputSection displayInput={displayInput} handleInput={handleInput} />
-        <ErrorMessage errorMsg={errorMsg} />
+      <div className="flex pl-5 pr-5 justify-around mt-5 items-center mb-10">
+        <div>
+          <InputSection displayInput={displayInput} handleInput={handleInput} />
+          <ErrorMessage errorMsg={errorMsg} />
+        </div>
+        <DivideLine />
+        <SortingSpeed />
+        <DivideLine />
+        <SortingButtons sorting={sorting} bubbleSort={bubbleSort} />
       </div>
-      <SortingButtons sorting={sorting} bubbleSort={bubbleSort} />
       <DisplayNumbers
         displayInputNums={displayInputNums}
         swapIndices={swapIndices}

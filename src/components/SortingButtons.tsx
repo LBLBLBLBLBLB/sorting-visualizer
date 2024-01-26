@@ -8,7 +8,7 @@ const SortingButtons: React.FC<SortingButtonProps> = ({
   sorting,
 }) => {
   return (
-    <div className="flex justify-center gap-5 mb-8">
+    <div className="flex justify-center gap-5 ">
       <button
         onClick={bubbleSort}
         className=" bg-rose-500 w-32 h-10 rounded-sm font-semibold text-gray-900"
