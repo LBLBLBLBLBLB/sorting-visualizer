@@ -1,8 +1,5 @@
 import { useState } from "react";
-
-interface SortingSpeedProps {
-  onSliderChange: (value: number) => void;
-}
+import { SortingSpeedProps } from "../interfaces/interfaces";
 
 const SortingSpeed: React.FC<SortingSpeedProps> = ({ onSliderChange }) => {
   const [sliderValue, setSliderValue] = useState<number>(1);

@@ -1,7 +1,4 @@
-interface DisplayNumbersProps {
-  displayInputNums: number[];
-  swapIndices: number[];
-}
+import { DisplayNumbersProps } from "../interfaces/interfaces";
 
 const DisplayNumbers: React.FC<DisplayNumbersProps> = ({
   displayInputNums,

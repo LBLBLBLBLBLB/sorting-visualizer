@@ -1,7 +1,4 @@
-interface SortingButtonProps {
-  bubbleSort: () => void;
-  sorting?: boolean;
-}
+import { SortingButtonProps } from "../interfaces/interfaces";
 
 const SortingButtons: React.FC<SortingButtonProps> = ({
   bubbleSort,

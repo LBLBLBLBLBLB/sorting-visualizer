@@ -1,6 +1,4 @@
-interface ErrorMessageProps {
-  errorMsg: string;
-}
+import { ErrorMessageProps } from "../interfaces/interfaces";
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ errorMsg }) => {
   return (

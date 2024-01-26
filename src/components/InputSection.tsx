@@ -1,7 +1,4 @@
-interface InputSectionProps {
-  handleInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  displayInput: (random?: boolean) => void;
-}
+import { InputSectionProps } from "../interfaces/interfaces";
 
 const InputSection: React.FC<InputSectionProps> = ({
   displayInput,
