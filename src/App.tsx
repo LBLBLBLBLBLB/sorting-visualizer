@@ -18,6 +18,9 @@ const App = () => {
   const [errorMsg, setErrorMsg] = useState<string>(" ");
   const [swapIndices, setSwapIndices] = useState<number[]>([]);
   const [sorting, setSorting] = useState<boolean>(false);
+  const [sortingSpeed, setSortingSpeed] = useState<number>(1);
+
+  const delay = 1000 / sortingSpeed;
 
   // Get input from the event, and modify it into an array of numbers for display
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +61,11 @@ const App = () => {
     }
   };
 
+  const handleSortingSpeedChange = (value: number) => {
+    setSortingSpeed(value);
+  };
+
+  // implementation of buble sort algorithm and display it
   const bubbleSort = async () => {
     const arr = [...displayInputNums];
     for (let i = 0; i < arr.length; i++) {
@@ -70,7 +78,7 @@ const App = () => {
           arr[j] = arr[j + 1];
           arr[j + 1] = temp;
 
-          await new Promise((resolve) => setTimeout(resolve, 2000));
+          await new Promise((resolve) => setTimeout(resolve, delay));
 
           setDisplayInputNums([...arr]);
         }
@@ -89,7 +97,7 @@ const App = () => {
           <ErrorMessage errorMsg={errorMsg} />
         </div>
         <DivideLine />
-        <SortingSpeed />
+        <SortingSpeed onSliderChange={handleSortingSpeedChange} />
         <DivideLine />
         <SortingButtons sorting={sorting} bubbleSort={bubbleSort} />
       </div>
