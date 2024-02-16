@@ -93,6 +93,34 @@ const App = () => {
     setSorting(false);
   };
 
+  // implementation of selection sort algorithm and display it
+  const selectionSort = async () => {
+    const arr = [...displayInputNums];
+    const n = arr.length;
+
+    for (let i = 0; i < n - 1; i++) {
+      let minIndex = i;
+
+      // Find the index of the minimum element in the  unsorted array
+      for (let j = i + 1; j < n; j++) {
+        if (arr[j] < arr[minIndex]) {
+          minIndex = j;
+        }
+      }
+
+      // Swap the minimum element with the first unsorted element
+      if (minIndex !== i) {
+        setSwapIndices([i, minIndex]);
+        [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
+
+        await new Promise((resolve) => setTimeout(resolve, delay));
+
+        setDisplayInputNums([...arr]);
+      }
+      setSwapIndices([]);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -104,7 +132,11 @@ const App = () => {
         <DivideLine />
         <SortingSpeed onSliderChange={handleSortingSpeedChange} />
         <DivideLine />
-        <SortingButtons sorting={sorting} bubbleSort={bubbleSort} />
+        <SortingButtons
+          sorting={sorting}
+          bubbleSort={bubbleSort}
+          selectionSort={selectionSort}
+        />
       </div>
       <DisplayNumbers
         displayInputNums={displayInputNums}

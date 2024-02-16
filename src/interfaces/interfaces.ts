@@ -9,6 +9,7 @@ interface InputSectionProps {
 
 interface SortingButtonProps {
   bubbleSort: () => void;
+  selectionSort: () => void;
   sorting?: boolean;
 }
 
