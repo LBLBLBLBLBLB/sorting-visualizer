@@ -20,7 +20,7 @@ const Modal = () => {
                     Welcome to the Sorting Visualizer!
                   </h3>
                   <button
-                    className="bg-neutral-150 hover:bg-gray-150 text-rose-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-neutral-150 hover:bg-gray-150 text-rose-600 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
